@@ -209,10 +209,8 @@
 				}
 			},
 			{
-				"name": "act_lookup_race_api",
+				"name": "act_lookup_race_data",
 				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_iterating_over_season_data",
@@ -246,17 +244,29 @@
 							"type": "JsonReadSettings"
 						}
 					},
+					"dataset": {
+						"referenceName": "DS_ADLSGEN2_SINK",
+						"type": "DatasetReference",
+						"parameters": {
+							"Directory_Path": {
+								"value": "@concat('')",
+								"type": "Expression"
+							},
+							"File_Name": {
+								"value": "@concat('')",
+								"type": "Expression"
+							}
+						}
+					},
 					"firstRowOnly": false
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "act_iterating_over_races_data",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "act_lookup_race_api",
+						"activity": "act_lookup_race_data",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -265,7 +275,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('act_lookup_race_api').output.value",
+						"value": "@activity('act_lookup_race_data').output.value",
 						"type": "Expression"
 					},
 					"isSequential": false,
@@ -280,10 +290,14 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Child_Pipeline",
+									"type": "PipelineReference"
+								},
 								"waitOnCompletion": true,
 								"parameters": {
 									"result_data": {
-										"value": "@item().MRData.RaceTable.Races",
+										"value": "@item().MRData.RaceTable.Races\n",
 										"type": "Expression"
 									}
 								}
@@ -417,7 +431,7 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "ForEach1",
+						"activity": "act_iterating_over_races_data",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -450,7 +464,7 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "ForEach1",
+						"activity": "act_iterating_over_races_data",
 						"dependencyConditions": [
 							"Skipped",
 							"Failed"

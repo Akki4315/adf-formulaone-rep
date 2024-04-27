@@ -16,60 +16,9 @@
 					"batchCount": 30,
 					"activities": [
 						{
-							"name": "act_set_season_year",
-							"type": "SetVariable",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
-							"dependsOn": [],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "season_year",
-								"value": {
-									"value": "@item().season",
-									"type": "Expression"
-								}
-							}
-						},
-						{
-							"name": "act_set_round",
-							"type": "SetVariable",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
-							"dependsOn": [],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "round",
-								"value": {
-									"value": "@item().round",
-									"type": "Expression"
-								}
-							}
-						},
-						{
 							"name": "act_copy_result_data_to_adlsgen2",
 							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "act_set_season_year",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								},
-								{
-									"activity": "act_set_round",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -100,7 +49,35 @@
 									}
 								},
 								"enableStaging": false
-							}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_HTTP_Source",
+									"type": "DatasetReference",
+									"parameters": {
+										"Relative_URL": {
+											"value": "@concat(item().season, '/',item().round,'/results.json')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_ADLSGEN2_SINK",
+									"type": "DatasetReference",
+									"parameters": {
+										"Directory_Path": {
+											"value": "@concat('bronze/results/', string(utcNow('yyyyMMdd')))",
+											"type": "Expression"
+										},
+										"File_Name": {
+											"value": "@concat(item().season,'_',item().round)",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
 					]
 				}
