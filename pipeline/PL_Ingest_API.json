@@ -5,6 +5,8 @@
 			{
 				"name": "act_copy_season_data_to_adlsgen2",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_lookup_insert_metadata_entry",
@@ -72,6 +74,8 @@
 			{
 				"name": "act_lookup_season_data",
 				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_copy_season_data_to_adlsgen2",
@@ -125,6 +129,8 @@
 			{
 				"name": "act_iterating_over_season_data",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_lookup_season_data",
@@ -234,7 +240,7 @@
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": {
-								"value": "@concat('bronze/race/', string(utcNow('yyyyMMdd')))",
+								"value": "@concat('bronze/races/', string(utcNow('yyyyMMdd')))",
 								"type": "Expression"
 							},
 							"wildcardFileName": "*",
