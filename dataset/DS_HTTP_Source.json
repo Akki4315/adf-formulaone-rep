@@ -10,6 +10,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "DS_FormulaOne"
+		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {

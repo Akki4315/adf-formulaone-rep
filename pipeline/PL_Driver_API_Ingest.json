@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "act_copy_driver_api_to_adlsgen2",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -35,7 +35,29 @@
 						}
 					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_HTTP_Source",
+						"type": "DatasetReference",
+						"parameters": {
+							"Relative_URL": "drivers.json?limit=1000"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_ADLSGEN2_SINK",
+						"type": "DatasetReference",
+						"parameters": {
+							"Directory_Path": {
+								"value": "@concat('bronze/drivers/', string(utcNow('yyyyMMdd')))",
+								"type": "Expression"
+							},
+							"File_Name": "drivers"
+						}
+					}
+				]
 			}
 		],
 		"folder": {
