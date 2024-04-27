@@ -1,0 +1,114 @@
+{
+	"name": "PL_LapTime_API_Ingest",
+	"properties": {
+		"activities": [
+			{
+				"name": "act_web_get_laps_record",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "http://ergast.com/api/f1.json?offset=581&limit=600"
+				}
+			},
+			{
+				"name": "act_foreach_iterating_laps_data",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "act_web_get_laps_record",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('act_web_get_laps_record').output.MRData.RaceTable.Races",
+						"type": "Expression"
+					},
+					"batchCount": 30,
+					"activities": [
+						{
+							"name": "act_copy_laps_api_to_adlsgen2",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "JsonSource",
+									"storeSettings": {
+										"type": "HttpReadSettings",
+										"requestMethod": "GET"
+									},
+									"formatSettings": {
+										"type": "JsonReadSettings"
+									}
+								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings",
+										"copyBehavior": "MergeFiles"
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_HTTP_Source",
+									"type": "DatasetReference",
+									"parameters": {
+										"Relative_URL": {
+											"value": "@concat(item().season,'/',item().round,'/laps.json?limit=1500')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_ADLSGEN2_SINK",
+									"type": "DatasetReference",
+									"parameters": {
+										"Directory_Path": {
+											"value": "@concat('bronze/laptimes/', string(utcNow('yyyyMMdd')))",
+											"type": "Expression"
+										},
+										"File_Name": {
+											"value": "@concat(item().season,'_',item().round)",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "FormulaOne_Ingestion_PL"
+		},
+		"annotations": []
+	}
+}

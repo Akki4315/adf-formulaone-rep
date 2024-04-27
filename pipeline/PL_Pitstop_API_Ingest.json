@@ -1,0 +1,114 @@
+{
+	"name": "PL_Pitstop_API_Ingest",
+	"properties": {
+		"activities": [
+			{
+				"name": "act_web_get_pitstops_record",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "http://ergast.com/api/f1.json?offset=839&limit=500"
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "act_web_get_pitstops_record",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('act_web_get_pitstops_record').output.MRData.RaceTable.Races",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"batchCount": 30,
+					"activities": [
+						{
+							"name": "act_copy_pitstop_api_to_adlsgen2",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "JsonSource",
+									"storeSettings": {
+										"type": "HttpReadSettings",
+										"requestMethod": "GET"
+									},
+									"formatSettings": {
+										"type": "JsonReadSettings"
+									}
+								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_HTTP_Source",
+									"type": "DatasetReference",
+									"parameters": {
+										"Relative_URL": {
+											"value": "@concat(item().season,'/',item().round,'/pitstops.json?limit=100')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_ADLSGEN2_SINK",
+									"type": "DatasetReference",
+									"parameters": {
+										"Directory_Path": {
+											"value": "@concat('bronze/pitstops/',string(utcNow('yyyyMMdd')))",
+											"type": "Expression"
+										},
+										"File_Name": {
+											"value": "@concat(item().season,'_',item().round)",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "FormulaOne_Ingestion_PL"
+		},
+		"annotations": []
+	}
+}

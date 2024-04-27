@@ -1,0 +1,37 @@
+{
+	"name": "DS_ADLSGEN2_SINK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_formula1adlsgen2sa",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Directory_Path": {
+				"type": "string"
+			},
+			"File_Name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "DS_FormulaOne"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().File_Name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().Directory_Path",
+					"type": "Expression"
+				},
+				"fileSystem": "formulaoneadf"
+			}
+		},
+		"schema": {}
+	}
+}

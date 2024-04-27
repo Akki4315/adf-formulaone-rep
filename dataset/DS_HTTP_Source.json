@@ -1,0 +1,29 @@
+{
+	"name": "DS_HTTP_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_http_api_ingest",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Relative_URL": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "DS_FormulaOne"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@dataset().Relative_URL",
+					"type": "Expression"
+				}
+			}
+		},
+		"schema": {}
+	}
+}

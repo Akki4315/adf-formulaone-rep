@@ -1,0 +1,107 @@
+{
+	"name": "Child_Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "act_foreach_iterating_over_race_result",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.result_data",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"batchCount": 30,
+					"activities": [
+						{
+							"name": "act_copy_result_data_to_adlsgen2",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "JsonSource",
+									"storeSettings": {
+										"type": "HttpReadSettings",
+										"requestMethod": "GET"
+									},
+									"formatSettings": {
+										"type": "JsonReadSettings"
+									}
+								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings",
+										"copyBehavior": "MergeFiles"
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_HTTP_Source",
+									"type": "DatasetReference",
+									"parameters": {
+										"Relative_URL": {
+											"value": "@concat(item().season, '/',item().round,'/results.json')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_ADLSGEN2_SINK",
+									"type": "DatasetReference",
+									"parameters": {
+										"Directory_Path": {
+											"value": "@concat('bronze/results/', string(utcNow('yyyyMMdd')))",
+											"type": "Expression"
+										},
+										"File_Name": {
+											"value": "@concat(item().season,'_',item().round)",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"result_data": {
+				"type": "array"
+			}
+		},
+		"variables": {
+			"season_year": {
+				"type": "String"
+			},
+			"round": {
+				"type": "String"
+			},
+			"season": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "FormulaOne_Ingestion_PL"
+		},
+		"annotations": []
+	}
+}
