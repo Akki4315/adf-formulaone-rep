@@ -5,6 +5,9 @@
 			"referenceName": "ls_AzurePostgreSql",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "DS_FormulaOne"
+		},
 		"annotations": [],
 		"type": "AzurePostgreSqlTable",
 		"schema": []
