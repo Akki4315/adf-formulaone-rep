@@ -1,0 +1,844 @@
+{
+	"name": "PL_Transform_All_Notebook",
+	"properties": {
+		"activities": [
+			{
+				"name": "Circuit_Notebook",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "act_lookup_insert_metadata_entry",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/akkikokane@outlook.com/adb-fromulaone-rep/ADF_FormulaOne/ingestion/circuit_ingest"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Driver_Notebook",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "act_lookup_insert_metadata_entry",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/akkikokane@outlook.com/adb-fromulaone-rep/ADF_FormulaOne/ingestion/driver_ingest"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Constructor_Notebook",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "act_lookup_insert_metadata_entry",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/akkikokane@outlook.com/adb-fromulaone-rep/ADF_FormulaOne/ingestion/constructor_ingest"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "LapTimes_Notebook",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "act_lookup_insert_metadata_entry",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/akkikokane@outlook.com/adb-fromulaone-rep/ADF_FormulaOne/ingestion/laptimes_ingest"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "PitStop_Notebook",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "act_lookup_insert_metadata_entry",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/akkikokane@outlook.com/adb-fromulaone-rep/ADF_FormulaOne/ingestion/pitstops_ingest"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Qualifying_Notebook",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "act_lookup_insert_metadata_entry",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/akkikokane@outlook.com/adb-fromulaone-rep/ADF_FormulaOne/ingestion/qualifying_ingest"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Races_Notebook",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "act_lookup_insert_metadata_entry",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/akkikokane@outlook.com/adb-fromulaone-rep/ADF_FormulaOne/ingestion/race_ingest"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Result_Notebook",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "act_lookup_insert_metadata_entry",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/akkikokane@outlook.com/adb-fromulaone-rep/ADF_FormulaOne/ingestion/results_ingest"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "act_set_start_time",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "job_id",
+					"value": {
+						"value": "@formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyyMMddHHmmss')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "act_lookup_insert_metadata_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "act_set_start_time",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "INSERT INTO \"formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{variables('job_id')}', 'PL_transform_api', 'circuit_api', 'In-Progress', '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}');\n\nINSERT INTO \"formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{variables('job_id')}', 'PL_transform_api', 'driver_api', 'In-Progress', '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}');\n\nINSERT INTO \"formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{variables('job_id')}', 'PL_transform_api', 'constructor_api', 'In-Progress', '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}');\n\nINSERT INTO \"formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{variables('job_id')}', 'PL_transform_api', 'laptime_api', 'In-Progress', '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}');\n\nINSERT INTO \"formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{variables('job_id')}', 'PL_transform_api', 'race_api', 'In-Progress', '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}');\n\nINSERT INTO \"formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{variables('job_id')}', 'PL_transform_api', 'result_api', 'In-Progress', '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}');\n\nINSERT INTO \"formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{variables('job_id')}', 'PL_transform_api', 'pitstop_api', 'In-Progress', '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}');\n\nINSERT INTO \"formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{variables('job_id')}', 'PL_transform_api', 'qualifying_api', 'In-Progress', '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}');\n\nSELECT job_id, job_name, task_name, status, start_time FROM \"formulaone_audit\".job_metadata_table;",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_driver_transformation_api_metadata_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Driver_Notebook",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'success',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='driver_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_driver_transform_api_metadata_fail_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Driver_Notebook",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'Failed',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='driver_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_cons_transform_api_metadata_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Constructor_Notebook",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'success',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='constructor_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_cons_transform_api_metadata_fail_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Constructor_Notebook",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'Failed',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='constructor_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_laps_transform_api_metadata_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "LapTimes_Notebook",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'success',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='laptime_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_laps_transform_api_metadata_fail_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "LapTimes_Notebook",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'Failed',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='laptime_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_pits_transform_api_metadata_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "PitStop_Notebook",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'success',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='pitstop_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_pits_transform_api_metadata_fail_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "PitStop_Notebook",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'Failed',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='pitstop_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_quali_transform_api_metadata_entry_copy1",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Qualifying_Notebook",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'success',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='qualifying_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_quali_transform_api_metadata_fail_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Qualifying_Notebook",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'Failed',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='qualifying_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_race_transform_api_metadata_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Races_Notebook",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'success',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='race_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_race_transform_api_metadata_fail_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Races_Notebook",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'Failed',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='race_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_result_transform_api_metadata_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Result_Notebook",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'success',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='result_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_result_transform_api_metadata_fail_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Result_Notebook",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'Failed',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='result_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_ckt_transform_api_metadata_entry_copy1",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Circuit_Notebook",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'success',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='circuit_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "act_lkp_update_ckt_transform_api_metadata_fail_entry",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Circuit_Notebook",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": {
+							"value": "update \"formulaone_audit\".job_metadata_table \nset status = 'Failed',\nend_time = '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}'\nwhere job_id ='@{variables('job_id')}' and task_name ='circuit_api';\n\nSELECT * FROM \"formulaone_audit\".job_metadata_table;\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"variables": {
+			"job_id": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "FormulaOne_Transformation_PL"
+		},
+		"annotations": []
+	}
+}
