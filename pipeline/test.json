@@ -42,7 +42,7 @@
 					"source": {
 						"type": "AzurePostgreSqlSource",
 						"query": {
-							"value": "INSERT INTO \"formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{variables('job_id')}', 'PL_ingest_api', 'season_api', 'In-Progress', '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}');\n\nSELECT job_id, job_name, task_name, status, start_time FROM \"formulaone_audit\".job_metadata_table;\n\nvariables('job_id')",
+							"value": "INSERT INTO \"formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{variables('job_id')}', 'PL_ingest_api', 'season_api', 'In-Progress', '@{formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyy-MM-dd HH:mm:ss')}');\n\nSELECT job_id, job_name, task_name, status, start_time FROM \"formulaone_audit\".job_metadata_table;",
 							"type": "Expression"
 						},
 						"partitionOption": "None"
