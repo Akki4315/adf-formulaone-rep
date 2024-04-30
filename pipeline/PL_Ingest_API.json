@@ -5,8 +5,6 @@
 			{
 				"name": "act_copy_season_data_to_adlsgen2",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_lookup_insert_metadata_entry",
@@ -74,8 +72,6 @@
 			{
 				"name": "act_lookup_season_data",
 				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_copy_season_data_to_adlsgen2",
@@ -129,8 +125,6 @@
 			{
 				"name": "act_iterating_over_season_data",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_lookup_season_data",
@@ -217,8 +211,6 @@
 			{
 				"name": "act_lookup_race_data",
 				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_iterating_over_season_data",
@@ -272,8 +264,6 @@
 			{
 				"name": "act_iterating_over_races_data",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_lookup_race_data",
@@ -319,8 +309,6 @@
 			{
 				"name": "act_set_start_time",
 				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureOutput": false,
@@ -328,9 +316,9 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "start_time",
+					"variableName": "job_id",
 					"value": {
-						"value": "@utcNow('yyyy-MM-dd HH:mm:ss')",
+						"value": "@formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'),'yyyyMMddHHmmss')",
 						"type": "Expression"
 					}
 				}
@@ -338,8 +326,6 @@
 			{
 				"name": "act_lookup_insert_metadata_entry",
 				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_set_start_time",
@@ -360,10 +346,14 @@
 					"source": {
 						"type": "AzurePostgreSqlSource",
 						"query": {
-							"value": "INSERT INTO \"Formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{formatDateTime(variables('start_time'),'yyyyMMddHHmmss')}', 'PL_ingest_api', 'season_api', 'In-Progress', '@{variables('start_time')}');\n\nINSERT INTO \"Formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{formatDateTime(variables('start_time'),'yyyyMMddHHmmss')}', 'PL_ingest_api', 'race_api', 'In-Progress', '@{variables('start_time')}');\n\nINSERT INTO \"Formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{formatDateTime(variables('start_time'),'yyyyMMddHHmmss')}', 'PL_ingest_api', 'result_api', 'In-Progress', '@{variables('start_time')}');\n\nSELECT job_id, job_name, task_name, status, start_time FROM \"Formulaone_audit\".job_metadata_table;",
+							"value": "INSERT INTO \"formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@(variables('job_id'))', 'PL_ingest_api', 'season_api', 'In-Progress', '@{formatDateTime(variables('job_id'),'yyyyMMddHHmmss')}');\n\nINSERT INTO \"Formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{formatDateTime(variables('start_time'),'yyyyMMddHHmmss')}', 'PL_ingest_api', 'race_api', 'In-Progress', '@{variables('start_time')}');\n\nINSERT INTO \"Formulaone_audit\".job_metadata_table\n(job_id, job_name, task_name, status, start_time)\nVALUES('@{formatDateTime(variables('start_time'),'yyyyMMddHHmmss')}', 'PL_ingest_api', 'result_api', 'In-Progress', '@{variables('start_time')}');\n\nSELECT job_id, job_name, task_name, status, start_time FROM \"Formulaone_audit\".job_metadata_table;",
 							"type": "Expression"
 						},
 						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
@@ -371,8 +361,6 @@
 			{
 				"name": "act_lookup_update_season_api_metadata_entry",
 				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_copy_season_data_to_adlsgen2",
@@ -404,8 +392,6 @@
 			{
 				"name": "act_lookup_update_race_api_metadata_entry",
 				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_iterating_over_season_data",
@@ -437,8 +423,6 @@
 			{
 				"name": "act_lookup_update_result_api_metadata_entry",
 				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_iterating_over_races_data",
@@ -470,8 +454,6 @@
 			{
 				"name": "act_lookup_update_result_api_metadata_entry_Fail",
 				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_iterating_over_races_data",
@@ -504,8 +486,6 @@
 			{
 				"name": "act_lookup_update_race_api_metadata_entry_Fail",
 				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_iterating_over_season_data",
@@ -538,8 +518,6 @@
 			{
 				"name": "act_lookup_update_season_api_metadata_entry_Fail",
 				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_copy_season_data_to_adlsgen2",
@@ -638,8 +616,6 @@
 			{
 				"name": "act_copy_constructor_api_to_adlsgen2",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_lookup_insert_metadata_entry",
@@ -704,8 +680,6 @@
 			{
 				"name": "act_copy_driver_api_to_adlsgen2",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "act_lookup_insert_metadata_entry",
@@ -770,6 +744,12 @@
 		],
 		"variables": {
 			"start_time": {
+				"type": "String"
+			},
+			"job_id": {
+				"type": "String"
+			},
+			"end _time": {
 				"type": "String"
 			}
 		},
