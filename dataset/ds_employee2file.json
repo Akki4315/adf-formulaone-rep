@@ -1,0 +1,40 @@
+{
+	"name": "ds_employee2file",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adlsgen2sabwt",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "employees_2.csv",
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "EmpId",
+				"type": "String"
+			},
+			{
+				"name": "Date",
+				"type": "String"
+			},
+			{
+				"name": "InTime",
+				"type": "String"
+			},
+			{
+				"name": "OutTime",
+				"type": "String"
+			}
+		]
+	}
+}
