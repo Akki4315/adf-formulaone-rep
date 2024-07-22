@@ -1,5 +1,5 @@
 {
-	"name": "logfileDF_append",
+	"name": "logfileDF",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -10,13 +10,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "dummyFile"
-				},
-				{
-					"dataset": {
-						"referenceName": "ds_logfile",
-						"type": "DatasetReference"
-					},
-					"name": "logfile"
 				}
 			],
 			"sinks": [
@@ -34,9 +27,6 @@
 				},
 				{
 					"name": "select1"
-				},
-				{
-					"name": "unioneExistingLogDetails"
 				}
 			],
 			"scriptLines": [
@@ -54,10 +44,6 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> dummyFile",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false,",
-				"     wildcardPaths:[('log/'+$LogFileName)]) ~> logfile",
 				"dummyFile derive(DataFactoryName = $datafactoryName,",
 				"          PipelineName = $PipelineName,",
 				"          Status = $Status,",
@@ -72,8 +58,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1, logfile union(byName: true)~> unioneExistingLogDetails",
-				"unioneExistingLogDetails sink(allowSchemaDrift: true,",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:[($LogFileName)],",
 				"     skipDuplicateMapInputs: true,",
