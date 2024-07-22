@@ -1,0 +1,90 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_employee2file",
+						"type": "DatasetReference"
+					},
+					"name": "Employee2File"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_employee3file",
+						"type": "DatasetReference"
+					},
+					"name": "Employee3File"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_adlsgen2_raw",
+						"type": "DatasetReference"
+					},
+					"name": "disctinctRows"
+				}
+			],
+			"transformations": [
+				{
+					"name": "unionEmployeeFiles"
+				},
+				{
+					"name": "RemoveDuplicateRows"
+				},
+				{
+					"name": "sort1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     SinkFileName as string ($SinkFileName)",
+				"}",
+				"source(output(",
+				"          EMPLOYEE_ID as string,",
+				"          FIRST_NAME as string,",
+				"          LAST_NAME as string,",
+				"          EMAIL as string,",
+				"          PHONE_NUMBER as string,",
+				"          JOB_ID as string,",
+				"          SALARY as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Employee2File",
+				"source(output(",
+				"          EMPLOYEE_ID as string,",
+				"          FIRST_NAME as string,",
+				"          LAST_NAME as string,",
+				"          EMAIL as string,",
+				"          PHONE_NUMBER as string,",
+				"          JOB_ID as string,",
+				"          SALARY as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Employee3File",
+				"Employee2File, Employee3File union(byName: false)~> unionEmployeeFiles",
+				"unionEmployeeFiles aggregate(groupBy(EMPLOYEE_ID),",
+				"     each(match(name!='EMPLOYEE_ID'), $$ = first($$))) ~> RemoveDuplicateRows",
+				"RemoveDuplicateRows sort(asc(EMPLOYEE_ID, true)) ~> sort1",
+				"sort1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EmpId as string,",
+				"          Date as string,",
+				"          InTime as string,",
+				"          OutTime as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> disctinctRows"
+			]
+		}
+	}
+}
