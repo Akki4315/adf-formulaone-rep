@@ -1,0 +1,84 @@
+{
+	"name": "logfileDF_append",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_dummyfile",
+						"type": "DatasetReference"
+					},
+					"name": "dummyFile"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_logfile",
+						"type": "DatasetReference"
+					},
+					"name": "logfile"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_logfile",
+						"type": "DatasetReference"
+					},
+					"name": "LogFileEntry"
+				}
+			],
+			"transformations": [
+				{
+					"name": "createLogDetailsColumn"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "unioneExistingLogDetails"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     datafactoryName as string,",
+				"     PipelineName as string,",
+				"     Status as string,",
+				"     RunId as string,",
+				"     TriggerName as string,",
+				"     LogFileName as string",
+				"}",
+				"source(output(",
+				"          dummy as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> dummyFile",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     wildcardPaths:[('log/'+$LogFileName)]) ~> logfile",
+				"dummyFile derive(DataFactoryName = $datafactoryName,",
+				"          PipelineName = $PipelineName,",
+				"          Status = $Status,",
+				"          RunId = $RunId,",
+				"          TriggerName = $TriggerName) ~> createLogDetailsColumn",
+				"createLogDetailsColumn select(mapColumn(",
+				"          DataFactoryName,",
+				"          PipelineName,",
+				"          Status,",
+				"          RunId,",
+				"          TriggerName",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1, logfile union(byName: true)~> unioneExistingLogDetails",
+				"unioneExistingLogDetails sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:[($LogFileName)],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> LogFileEntry"
+			]
+		}
+	}
+}
