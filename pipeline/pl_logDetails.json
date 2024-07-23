@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "pl_logDetails",
 	"properties": {
 		"activities": [
 			{
@@ -70,6 +70,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {

@@ -1,0 +1,75 @@
+{
+	"name": "scdtype1_df",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_employee2file",
+						"type": "DatasetReference"
+					},
+					"name": "employeeFile"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_employee_table",
+						"type": "DatasetReference"
+					},
+					"name": "emplyeeTable"
+				}
+			],
+			"transformations": [
+				{
+					"name": "upsertData"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EMPLOYEE_ID as integer,",
+				"          FIRST_NAME as string,",
+				"          LAST_NAME as string,",
+				"          EMAIL as string,",
+				"          PHONE_NUMBER as string,",
+				"          JOB_ID as string,",
+				"          SALARY as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> employeeFile",
+				"employeeFile alterRow(upsertIf(1==1)) ~> upsertData",
+				"upsertData sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          employee_id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          phone_number as string,",
+				"          job_id as string,",
+				"          salary as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['employee_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          employee_id = EMPLOYEE_ID,",
+				"          first_name = FIRST_NAME,",
+				"          last_name = LAST_NAME,",
+				"          email = EMAIL,",
+				"          phone_number = PHONE_NUMBER,",
+				"          job_id = JOB_ID,",
+				"          salary = SALARY",
+				"     )) ~> emplyeeTable"
+			]
+		}
+	}
+}
